@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                       <h4>Enter user info</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                           <label>Enter name:</label>
+                           <input type="text" class="form-control" id="name" name="name" placeholder="Enter name"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Number:</label>
+                           <input type="text" class="form-control" id="contact" name="cont" placeholder="Enter contact"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Enter Email:</label>
+                           <input type="email" class="form-control" id="email" name="email" placeholder="Enter email"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Enter profile:</label>
+                           <input type="text" class="form-control" id="profile" name="profile" placeholder="Enter profile"/>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-warning" id="clearBtn">Clear</button>
+                            <button class="btn btn-primary" id="submitBtn">Submit</button>
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                       <div id="response">
+
+                       </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $("#submitBtn").click(function(){
+            let name = $('#name').val();
+            let contact = $('#cont').val();
+            let email = $('#email').val();
+            let profile = $('#profile').val();
+
+            $.post("http:localhost:3000/api/add",{
+               name:name,
+               email:email,
+               contact:contact,
+               profile:profile
+            },function(response){
+               $('#response').html('<div class="alert alert-success">'+response.message+'</div>')
+               clearFields()
+            })
+
+        })
+        $('#clearBtn').click(clearFields())
+        function clearFields(){
+            $('#name').val('');
+            $('#cont').val('');
+            $('#email').val('');
+            $('#profile').val('');
+        }
+    </script>
+</body>
+
+</html>
